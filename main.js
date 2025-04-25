@@ -1,6 +1,3 @@
-import { db } from "./firebaseConfig.js";
-import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
-
 const months = ["September", "October", "November", "December", "January", "February", "March", "April"];
 const daysInMonth = {
   September: 30,
@@ -59,7 +56,7 @@ async function submitSignup() {
 
   for (let day of selectedDays) {
     const dateKey = `${selectedMonth}-${day}`;
-    await addDoc(collection(db, "signups"), {
+    await db.collection("signups").add({
       date: dateKey,
       name,
       comment
