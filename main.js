@@ -212,7 +212,7 @@ window.onload = function() {
         document.getElementById("confirmation").style.display = "none";
       }, 3000);
     }
-
+ 
     document.getElementById("submit").onclick = submitSignup;
     await fetchSignups();
     renderTabs();
