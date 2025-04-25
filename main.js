@@ -1,5 +1,9 @@
+import emailjs from 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
+
 window.onload = function() {
   setTimeout(async function() {
+    emailjs.init("NU05RrxOBPbELbbMe");
+
     const months = ["September", "October", "November", "December", "January", "February", "March", "April"];
     const daysInMonth = {
       September: 30,
@@ -212,7 +216,7 @@ window.onload = function() {
         document.getElementById("confirmation").style.display = "none";
       }, 3000);
     }
- 
+
     document.getElementById("submit").onclick = submitSignup;
     await fetchSignups();
     renderTabs();
