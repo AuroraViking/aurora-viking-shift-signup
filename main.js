@@ -20,8 +20,10 @@ window.onload = function() {
     months.forEach(month => {
       const btn = document.createElement("button");
       btn.textContent = month;
+      btn.className = month === selectedMonth ? "selected" : "";
       btn.onclick = () => {
         selectedMonth = month;
+        renderTabs();
         renderCalendar();
       };
       tabDiv.appendChild(btn);
