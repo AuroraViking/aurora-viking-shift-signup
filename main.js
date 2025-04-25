@@ -81,6 +81,9 @@ window.onload = function() {
             toggleDay(day, div);
           }
         };
+        div.ondblclick = () => {
+          showDaySignups(dateKey);
+        };
         cal.appendChild(div);
       }
     }
