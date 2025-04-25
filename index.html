@@ -6,10 +6,12 @@
   <title>Vaktskrá Víkinga</title>
   <link rel="stylesheet" href="style.css">
 
-  <!-- Updated EmailJS Library -->
-  <script type="module">
-    import emailjs from 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
-    emailjs.init("NU05RrxOBPbELbbMe"); // Your Public Key
+  <!-- EmailJS Classic Stable -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function(){
+      emailjs.init("NU05RrxOBPbELbbMe");
+    })();
   </script>
 </head>
 <body>
