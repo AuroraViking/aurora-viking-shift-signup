@@ -3,8 +3,14 @@ import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.6.10/fi
 
 const months = ["September", "October", "November", "December", "January", "February", "March", "April"];
 const daysInMonth = {
-  September: 30, October: 31, November: 30, December: 31,
-  January: 31, February: 29, March: 31, April: 30,
+  September: 30,
+  October: 31,
+  November: 30,
+  December: 31,
+  January: 31,
+  February: 29,
+  March: 31,
+  April: 30,
 };
 
 let selectedMonth = "September";
@@ -12,6 +18,7 @@ let selectedDays = [];
 
 function renderTabs() {
   const tabDiv = document.getElementById("month-tabs");
+  tabDiv.innerHTML = '';
   months.forEach(month => {
     const btn = document.createElement("button");
     btn.textContent = month;
