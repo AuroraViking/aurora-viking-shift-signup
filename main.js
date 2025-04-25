@@ -74,7 +74,13 @@ window.onload = function() {
         const dateKey = `${selectedMonth}-${day}`;
         const count = signupsData[dateKey] ? signupsData[dateKey].length : 0;
         div.textContent = `${day} (${count})`;
-        div.onclick = () => showDaySignups(dateKey);
+        div.onclick = () => {
+          if (viewingMyShifts) {
+            showDaySignups(dateKey);
+          } else {
+            toggleDay(day, div);
+          }
+        };
         cal.appendChild(div);
       }
     }
