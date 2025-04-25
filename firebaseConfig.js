@@ -1,5 +1,4 @@
-// firebaseConfig.js
-
+// Initialize Firebase directly (no imports)
 const firebaseConfig = {
   apiKey: "AIzaSyBg8WiIUaIivMEuzMyQNnCK-Eki3wXwQFQ",
   authDomain: "aurora-viking-shifts.firebaseapp.com",
@@ -10,8 +9,8 @@ const firebaseConfig = {
   measurementId: "G-EGV1ECXWB2"
 };
 
-// Initialize Firebase
+// Initialize Firebase App
 firebase.initializeApp(firebaseConfig);
 
-// Initialize Firestore
+// Make Firestore database available
 const db = firebase.firestore();
