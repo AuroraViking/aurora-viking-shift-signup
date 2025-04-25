@@ -37,9 +37,10 @@ window.onload = async function() {
       if (month === selectedMonth) {
         btn.classList.add("selected");
       }
-      btn.onclick = () => {
+      btn.onclick = async () => {
         selectedMonth = month;
         renderTabs();
+        await fetchSignups();
         renderCalendar();
       };
       tabDiv.appendChild(btn);
