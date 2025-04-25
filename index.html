@@ -16,7 +16,6 @@
 
     <div id="form">
       <input id="name" type="text" placeholder="Nafn þitt" />
-      <input id="email" type="email" placeholder="Netfangið þitt" />
       <textarea id="comment" placeholder="Athugasemd (valfrjálst)"></textarea>
       <button id="submit">Skrá mig</button>
     </div>
@@ -24,15 +23,12 @@
     <div id="confirmation" style="display:none;">✅ Þú hefur verið skráður!</div>
   </div>
 
-  <!-- Firebase Scripts -->
+  <!-- Firebase -->
   <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
   <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
   <script type="module" src="firebaseConfig.js"></script>
 
-  <!-- EmailJS -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-
-  <!-- App Main Script -->
+  <!-- Main App -->
   <script type="module" src="main.js"></script>
 </body>
 </html>
