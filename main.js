@@ -1,4 +1,4 @@
-window.onload = function() {
+window.onload = async function() {
   const months = ["September", "October", "November", "December", "January", "February", "March", "April"];
   const daysInMonth = {
     September: 30,
@@ -13,6 +13,19 @@ window.onload = function() {
 
   let selectedMonth = "September";
   let selectedDays = [];
+  let signupsData = {};
+
+  async function fetchSignups() {
+    const snapshot = await db.collection("signups").get();
+    signupsData = {};
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      if (!signupsData[data.date]) {
+        signupsData[data.date] = [];
+      }
+      signupsData[data.date].push(data.name);
+    });
+  }
 
   function renderTabs() {
     const tabDiv = document.getElementById("month-tabs");
@@ -39,7 +52,9 @@ window.onload = function() {
     for (let day = 1; day <= daysInMonth[selectedMonth]; day++) {
       const div = document.createElement("div");
       div.className = "day";
-      div.textContent = day;
+      const dateKey = `${selectedMonth}-${day}`;
+      const count = signupsData[dateKey] ? signupsData[dateKey].length : 0;
+      div.textContent = count > 0 ? `${day} (${count})` : day;
       div.onclick = () => toggleDay(day, div);
       cal.appendChild(div);
     }
@@ -75,13 +90,16 @@ window.onload = function() {
     document.getElementById("calendar").innerHTML = "";
     document.getElementById("confirmation").style.display = "block";
 
+    await fetchSignups();
+    renderCalendar();
+
     setTimeout(() => {
       document.getElementById("confirmation").style.display = "none";
-      renderCalendar();
     }, 3000);
   }
 
   document.getElementById("submit").onclick = submitSignup;
+  await fetchSignups();
   renderTabs();
   renderCalendar();
 };
