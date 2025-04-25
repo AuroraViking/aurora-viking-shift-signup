@@ -1,5 +1,3 @@
-import { db } from './firebaseConfig.js';
-
 window.onload = function() {
   setTimeout(async function() {
     emailjs.init("NU05RrxOBPbELbbMe");
@@ -22,7 +20,7 @@ window.onload = function() {
     let viewingMyShifts = false;
 
     async function fetchSignups() {
-      const snapshot = await db.collection("signups").get();
+      const snapshot = await window.db.collection("signups").get();
       signupsData = {};
       snapshot.forEach(doc => {
         const data = doc.data();
@@ -170,7 +168,7 @@ window.onload = function() {
     }
 
     window.removeSignup = async function(id) {
-      await db.collection("signups").doc(id).delete();
+      await window.db.collection("signups").doc(id).delete();
       alert("Guide removed!");
       document.location.reload();
     }
@@ -183,7 +181,7 @@ window.onload = function() {
 
       for (let day of selectedDays) {
         const dateKey = `${selectedMonth}-${day}`;
-        await db.collection("signups").add({
+        await window.db.collection("signups").add({
           date: dateKey,
           name,
           email,
