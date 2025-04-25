@@ -1,4 +1,6 @@
-// Initialize Firebase directly (no imports)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyBg8WiIUaIivMEuzMyQNnCK-Eki3wXwQFQ",
   authDomain: "aurora-viking-shifts.firebaseapp.com",
@@ -9,8 +11,5 @@ const firebaseConfig = {
   measurementId: "G-EGV1ECXWB2"
 };
 
-// Initialize Firebase App
-firebase.initializeApp(firebaseConfig);
-
-// Make Firestore database available
-const db = firebase.firestore();
+const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
