@@ -1,12 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aurora Viking Shift Signup</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-<body style="margin:0;background:black;color:white;">
-  <div id="root"></div>
-  <script type="module" src="./ShiftSignup.jsx"></script>
+<body>
+  <div id="app">
+    <img src="White.svg" alt="Aurora Viking Logo" id="logo" />
+    <h1>Aurora Viking Shift Signup</h1>
+
+    <div id="month-tabs"></div>
+    <div id="calendar"></div>
+
+    <div id="form">
+      <input id="name" type="text" placeholder="Your Name" />
+      <textarea id="comment" placeholder="Optional Comment"></textarea>
+      <button id="submit">Sign Up</button>
+    </div>
+  </div>
+
+  <div id="confirmation" style="display:none;">✅ Thank you! You're signed up.</div>
+
+  <script src="firebaseConfig.js" type="module"></script>
+  <script src="main.js" type="module"></script>
 </body>
 </html>
