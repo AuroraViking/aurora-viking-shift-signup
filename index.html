@@ -5,14 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vaktskrá Víkinga</title>
   <link rel="stylesheet" href="style.css">
-
-  <!-- EmailJS Classic Stable -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2.6.4/dist/email.min.js"></script>
-  <script type="text/javascript">
-    (function(){
-      emailjs.init("NU05RrxOBPbELbbMe");
-    })();
-  </script>
 </head>
 <body>
   <div id="app">
@@ -35,7 +27,7 @@
   <!-- Firebase and App Scripts -->
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
-  <script src="firebaseConfig.js"></script>
-  <script src="main.js"></script>
+  <script type="module" src="firebaseConfig.js"></script>
+  <script type="module" src="main.js"></script>
 </body>
 </html>
