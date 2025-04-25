@@ -11,23 +11,23 @@
     <img src="White.svg" alt="Aurora Viking Logo" id="logo" />
     <h1>Aurora Viking Shift Signup</h1>
 
-    <div id="month-tabs"></div> <!-- Month buttons will be generated here -->
-    <div id="calendar"></div> <!-- Calendar days will be generated here -->
+    <div id="month-tabs"></div> <!-- Month buttons -->
+    <div id="calendar"></div>    <!-- Calendar days -->
 
     <div id="form">
       <input id="name" type="text" placeholder="Your Name" />
       <textarea id="comment" placeholder="Optional Comment"></textarea>
       <button id="submit">Sign Up</button>
     </div>
+
+    <div id="confirmation" style="display:none;">✅ Thank you! You're signed up.</div>
   </div>
 
-  <div id="confirmation" style="display:none;">✅ Thank you! You're signed up.</div>
-
-  <!-- Load Firebase SDK directly here FIRST -->
+  <!-- Load Firebase directly (no CORS problems) -->
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
 
-  <!-- Then load your custom code -->
+  <!-- Load your scripts -->
   <script src="firebaseConfig.js"></script>
   <script src="main.js"></script>
 </body>
