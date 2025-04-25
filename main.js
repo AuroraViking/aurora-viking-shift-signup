@@ -1,5 +1,3 @@
-import emailjs from 'https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js';
-
 window.onload = function() {
   setTimeout(async function() {
     emailjs.init("NU05RrxOBPbELbbMe");
