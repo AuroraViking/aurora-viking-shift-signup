@@ -1,6 +1,5 @@
 window.onload = function() {
   setTimeout(async function() {
-    emailjs.init("NU05RrxOBPbELbbMe");
 
     const months = ["September", "October", "November", "December", "January", "February", "March", "April"];
     const daysInMonth = {
@@ -77,29 +76,7 @@ window.onload = function() {
         const count = signupsData[dateKey] ? signupsData[dateKey].length : 0;
         div.textContent = `${day} (${count})`;
 
-        let touchTimer;
-        div.onclick = () => {
-          if (viewingMyShifts) {
-            showDaySignups(dateKey);
-          } else {
-            toggleDay(day, div);
-          }
-        };
-
-        div.ondblclick = () => {
-          showDaySignups(dateKey);
-        };
-
-        div.ontouchstart = () => {
-          touchTimer = setTimeout(() => {
-            showDaySignups(dateKey);
-          }, 500);
-        };
-
-        div.ontouchend = () => {
-          clearTimeout(touchTimer);
-        };
-
+        div.onclick = () => toggleDay(day, div);
         cal.appendChild(div);
       }
     }
@@ -150,59 +127,22 @@ window.onload = function() {
       }
     }
 
-    async function showDaySignups(dateKey) {
-      const guides = signupsData[dateKey] || [];
-      if (guides.length === 0) {
-        alert("No guides signed up for this date.");
-        return;
-      }
-
-      const list = guides.map(g => `${g.name} <button onclick=\"removeSignup('${g.id}')\">Remove</button>`).join('<br>');
-      const popup = document.createElement("div");
-      popup.innerHTML = `<div style='background:#222; padding:20px; border:2px solid #00ffe1; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:999;'>
-        <h3>Guides for ${dateKey}</h3>
-        ${list}
-        <br><br><button onclick=\"this.parentElement.remove()\">Close</button>
-      </div>`;
-      document.body.appendChild(popup);
-    }
-
-    window.removeSignup = async function(id) {
-      await window.db.collection("signups").doc(id).delete();
-      alert("Guide removed!");
-      document.location.reload();
-    }
-
     async function submitSignup() {
       const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
       const comment = document.getElementById("comment").value.trim();
-      if (!name || !email) return;
+      if (!name) return;
 
       for (let day of selectedDays) {
         const dateKey = `${selectedMonth}-${day}`;
         await window.db.collection("signups").add({
           date: dateKey,
           name,
-          email,
           comment
         });
       }
 
-      emailjs.send('service_thkd5yj', 'template_os5a0co', {
-        guide_name: name,
-        guide_email: email,
-        selected_dates: selectedDays.map(day => `${selectedMonth}-${day}`).join(', '),
-        comment: comment
-      }).then(function(response) {
-        console.log('SUCCESS!', response.status, response.text);
-      }, function(error) {
-        console.log('FAILED...', error);
-      });
-
       selectedDays = [];
       document.getElementById("name").value = "";
-      document.getElementById("email").value = "";
       document.getElementById("comment").value = "";
       document.getElementById("calendar").innerHTML = "";
       document.getElementById("confirmation").style.display = "block";
