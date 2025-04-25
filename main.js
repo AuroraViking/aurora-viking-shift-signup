@@ -25,6 +25,7 @@ window.onload = async function() {
       }
       signupsData[data.date].push(data.name);
     });
+    console.log(signupsData);
   }
 
   function renderTabs() {
@@ -55,7 +56,7 @@ window.onload = async function() {
       div.className = "day";
       const dateKey = `${selectedMonth}-${day}`;
       const count = signupsData[dateKey] ? signupsData[dateKey].length : 0;
-      div.textContent = count > 0 ? `${day} (${count})` : day;
+      div.textContent = `${day} (${count})`;
       div.onclick = () => toggleDay(day, div);
       cal.appendChild(div);
     }
