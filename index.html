@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vaktskrá Víkinga</title>
   <link rel="stylesheet" href="style.css">
+
+  <!-- EmailJS Library -->
+  <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function(){
+      emailjs.init("NU05RrxOBPbELbbMe"); // Your Public Key
+    })();
+  </script>
 </head>
 <body>
   <div id="app">
@@ -23,6 +31,7 @@
     <div id="confirmation" style="display:none;">✅ Þú hefur verið skráður!</div>
   </div>
 
+  <!-- Firebase and App Scripts -->
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
   <script src="firebaseConfig.js"></script>
