@@ -173,20 +173,23 @@ window.onload = function() {
 
     async function submitSignup() {
       const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
       const comment = document.getElementById("comment").value.trim();
-      if (!name) return;
+      if (!name || !email) return;
 
       for (let day of selectedDays) {
         const dateKey = `${selectedMonth}-${day}`;
         await db.collection("signups").add({
           date: dateKey,
           name,
+          email,
           comment
         });
       }
 
       emailjs.send('service_thkd5yj', 'template_os5a0co', {
         guide_name: name,
+        guide_email: email,
         selected_dates: selectedDays.map(day => `${selectedMonth}-${day}`).join(', '),
         comment: comment
       }).then(function(response) {
@@ -197,6 +200,7 @@ window.onload = function() {
 
       selectedDays = [];
       document.getElementById("name").value = "";
+      document.getElementById("email").value = "";
       document.getElementById("comment").value = "";
       document.getElementById("calendar").innerHTML = "";
       document.getElementById("confirmation").style.display = "block";
