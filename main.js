@@ -1,3 +1,5 @@
+import { db } from './firebaseConfig.js';
+
 window.onload = function() {
   setTimeout(async function() {
     emailjs.init("NU05RrxOBPbELbbMe");
