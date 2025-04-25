@@ -25,7 +25,7 @@ window.onload = function() {
         if (!signupsData[data.date]) {
           signupsData[data.date] = [];
         }
-        signupsData[data.date].push(data.name);
+        signupsData[data.date].push({ id: doc.id, name: data.name });
       });
       console.log(signupsData);
     }
@@ -74,7 +74,7 @@ window.onload = function() {
         const dateKey = `${selectedMonth}-${day}`;
         const count = signupsData[dateKey] ? signupsData[dateKey].length : 0;
         div.textContent = `${day} (${count})`;
-        div.onclick = () => toggleDay(day, div);
+        div.onclick = () => showDaySignups(dateKey);
         cal.appendChild(div);
       }
     }
@@ -103,8 +103,8 @@ window.onload = function() {
         if (!name) return;
 
         const myShifts = [];
-        for (const [date, names] of Object.entries(signupsData)) {
-          if (names.includes(name)) {
+        for (const [date, entries] of Object.entries(signupsData)) {
+          if (entries.some(e => e.name === name)) {
             myShifts.push(date);
           }
         }
@@ -123,6 +123,29 @@ window.onload = function() {
         selectedDays.push(day);
         element.classList.add("selected");
       }
+    }
+
+    async function showDaySignups(dateKey) {
+      const guides = signupsData[dateKey] || [];
+      if (guides.length === 0) {
+        alert("No guides signed up for this date.");
+        return;
+      }
+
+      const list = guides.map(g => `${g.name} <button onclick=\"removeSignup('${g.id}')\">Remove</button>`).join('<br>');
+      const popup = document.createElement("div");
+      popup.innerHTML = `<div style='background:#222; padding:20px; border:2px solid #00ffe1; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:999;'>
+        <h3>Guides for ${dateKey}</h3>
+        ${list}
+        <br><br><button onclick=\"this.parentElement.remove()\">Close</button>
+      </div>`;
+      document.body.appendChild(popup);
+    }
+
+    window.removeSignup = async function(id) {
+      await db.collection("signups").doc(id).delete();
+      alert("Guide removed!");
+      document.location.reload();
     }
 
     async function submitSignup() {
