@@ -1,33 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="is">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aurora Viking Shift Signup</title>
+  <title>Vaktskrá Víkinga</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div id="app">
     <img src="White.svg" alt="Aurora Viking Logo" id="logo" />
-    <h1>Aurora Viking Shift Signup</h1>
+    <h1>Vaktskrá Víkinga</h1>
 
-    <div id="month-tabs"></div> <!-- Month buttons -->
-    <div id="calendar"></div>    <!-- Calendar days -->
+    <div id="month-tabs"></div>
+    <div id="calendar"></div>
 
     <div id="form">
-      <input id="name" type="text" placeholder="Your Name" />
-      <textarea id="comment" placeholder="Optional Comment"></textarea>
-      <button id="submit">Sign Up</button>
+      <input id="name" type="text" placeholder="Nafn þitt" />
+      <textarea id="comment" placeholder="Athugasemd (valfrjálst)"></textarea>
+      <button id="submit">Skrá mig</button>
     </div>
 
-    <div id="confirmation" style="display:none;">✅ Thank you! You're signed up.</div>
+    <div id="confirmation" style="display:none;">✅ Þú hefur verið skráður!</div>
   </div>
 
-  <!-- Load Firebase directly (no CORS problems) -->
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
-
-  <!-- Load your scripts -->
   <script src="firebaseConfig.js"></script>
   <script src="main.js"></script>
 </body>
