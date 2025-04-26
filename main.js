@@ -78,6 +78,10 @@ window.onload = function() {
         const count = signupsData[dateKey] ? signupsData[dateKey].length : 0;
         div.textContent = `${day} (${count})`;
 
+        if (count >= 5) {
+          div.classList.add("full");
+        }
+
         let touchTimer;
         div.onclick = () => {
           if (viewingMyShifts) {
