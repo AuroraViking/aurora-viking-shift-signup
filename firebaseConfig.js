@@ -12,4 +12,4 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-window.db = getFirestore(app);  // 🛡️ Global variable now!
+window.db = getFirestore(app); // Global db
