@@ -29,7 +29,7 @@ window.onload = function() {
         if (!signupsData[data.date]) {
           signupsData[data.date] = [];
         }
-        signupsData[data.date].push({ id: doc.id, name: data.name });
+        signupsData[data.date].push({ id: doc.id, name: data.name, approved: data.approved || false });
       });
       console.log(signupsData);
     }
@@ -131,9 +131,10 @@ window.onload = function() {
       popup.innerHTML = `
         <h3>Guides for ${dateKey}</h3>
         ${guides.map(g => `
-          <div style="margin:10px;">
+          <div id="guide-${g.id}" style="margin:10px;${g.approved ? ' color: lightgreen;' : ''}">
             ${g.name}
             <button onclick="removeSignup('${g.id}')" style="margin-left:10px;">Remove</button>
+            <button onclick="approveSignup('${g.id}')" style="margin-left:10px;">Approve</button>
           </div>
         `).join('')}
         <br>
@@ -146,6 +147,13 @@ window.onload = function() {
       await deleteDoc(doc(window.db, "signups", id));
       alert("Guide removed!");
       document.location.reload();
+    }
+
+    window.approveSignup = async function(id) {
+      const guideDiv = document.getElementById(`guide-${id}`);
+      if (guideDiv) {
+        guideDiv.style.color = "lightgreen";
+      }
     }
 
     function renderMyShiftsView() {
@@ -237,7 +245,8 @@ window.onload = function() {
           await addDoc(collection(window.db, "signups"), {
             date: dateKey,
             name,
-            comment: tempComment
+            comment: tempComment,
+            approved: false
           });
         }
 
