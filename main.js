@@ -1,4 +1,4 @@
-import { collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+import { collection, getDocs, addDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
 window.onload = function() {
   setTimeout(async function() {
@@ -111,8 +111,33 @@ window.onload = function() {
         alert("No guides signed up for this date.");
         return;
       }
-      const list = guides.map(g => g.name).join("\n");
-      alert(`Guides signed up for ${dateKey}:\n${list}`);
+      const popup = document.createElement("div");
+      popup.style.position = "fixed";
+      popup.style.top = "50%";
+      popup.style.left = "50%";
+      popup.style.transform = "translate(-50%, -50%)";
+      popup.style.background = "#222";
+      popup.style.padding = "20px";
+      popup.style.border = "2px solid #00ffe1";
+      popup.style.zIndex = "999";
+      popup.innerHTML = `
+        <h3>Guides for ${dateKey}</h3>
+        ${guides.map(g => `
+          <div style="margin:10px;">
+            ${g.name}
+            <button onclick="removeSignup('${g.id}')" style="margin-left:10px;">Remove</button>
+          </div>
+        `).join('')}
+        <br>
+        <button onclick="this.parentElement.remove()">Close</button>
+      `;
+      document.body.appendChild(popup);
+    }
+
+    window.removeSignup = async function(id) {
+      await deleteDoc(doc(window.db, "signups", id));
+      alert("Guide removed!");
+      document.location.reload();
     }
 
     function renderMyShiftsView() {
