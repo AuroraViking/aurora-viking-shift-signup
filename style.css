@@ -132,7 +132,7 @@ h1 {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 1;
+  z-index: 2;
 }
 
 #aurora-background {
@@ -144,7 +144,7 @@ h1 {
   background: linear-gradient(120deg, #001f3f, #0074D9, #7FDBFF);
   background-size: 200% 200%;
   animation: aurora 15s ease infinite;
-  z-index: 0;
+  z-index: 1;
   opacity: 0.7;
 }
 
