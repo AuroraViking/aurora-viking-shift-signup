@@ -1,3 +1,5 @@
+import { collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+
 window.onload = function() {
   setTimeout(async function() {
 
@@ -19,7 +21,7 @@ window.onload = function() {
     let viewingMyShifts = false;
 
     async function fetchSignups() {
-      const snapshot = await window.db.collection("signups").get();
+      const snapshot = await getDocs(collection(window.db, "signups"));
       signupsData = {};
       snapshot.forEach(doc => {
         const data = doc.data();
@@ -156,7 +158,7 @@ window.onload = function() {
 
       for (let day of selectedDays) {
         const dateKey = `${selectedMonth}-${day}`;
-        await window.db.collection("signups").add({
+        await addDoc(collection(window.db, "signups"), {
           date: dateKey,
           name,
           comment
