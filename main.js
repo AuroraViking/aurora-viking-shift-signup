@@ -76,7 +76,29 @@ window.onload = function() {
         const count = signupsData[dateKey] ? signupsData[dateKey].length : 0;
         div.textContent = `${day} (${count})`;
 
-        div.onclick = () => toggleDay(day, div);
+        let touchTimer;
+        div.onclick = () => {
+          if (viewingMyShifts) {
+            showDaySignups(dateKey);
+          } else {
+            toggleDay(day, div);
+          }
+        };
+
+        div.ondblclick = () => {
+          showDaySignups(dateKey);
+        };
+
+        div.ontouchstart = () => {
+          touchTimer = setTimeout(() => {
+            showDaySignups(dateKey);
+          }, 500);
+        };
+
+        div.ontouchend = () => {
+          clearTimeout(touchTimer);
+        };
+
         cal.appendChild(div);
       }
     }
