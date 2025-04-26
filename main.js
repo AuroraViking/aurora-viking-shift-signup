@@ -76,8 +76,11 @@ window.onload = function() {
         const div = document.createElement("div");
         div.className = "day";
         const dateKey = `${selectedMonth}-${day}`;
-        const count = signupsData[dateKey] ? signupsData[dateKey].length : 0;
-        div.textContent = `${day} (${count})`;
+        const guides = signupsData[dateKey] || [];
+        const initials = guides.map(g => g.name[0]).join(' ');
+        const count = guides.length;
+
+        div.innerHTML = `<strong>${day}</strong> (${count})<br><small>${initials}</small>`;
 
         if (count >= 5) {
           div.classList.add("full");
