@@ -77,10 +77,11 @@ window.onload = function() {
         div.className = "day";
         const dateKey = `${selectedMonth}-${day}`;
         const guides = signupsData[dateKey] || [];
-        const initials = guides.map(g => g.name[0]).join(' ');
         const count = guides.length;
 
-        div.innerHTML = `<strong>${day}</strong> (${count})<br><small>${initials}</small>`;
+        let initialsHTML = guides.map(g => `<span style='color: ${g.approved ? "lightgreen" : "white"};'>${g.name[0]}</span>`).join(' ');
+
+        div.innerHTML = `<strong>${day}</strong> (${count})<br><small>${initialsHTML}</small>`;
 
         if (count >= 5) {
           div.classList.add("full");
@@ -143,10 +144,11 @@ window.onload = function() {
       const docRef = doc(window.db, "signups", id);
       await updateDoc(docRef, { approved: true });
 
-      const guideDiv = document.getElementById(`guide-${id}`);
-      if (guideDiv) {
-        guideDiv.style.color = "lightgreen";
-      }
+      await fetchSignups();
+      renderCalendar();
+
+      const popup = document.querySelector("div[style*='position: fixed']");
+      if (popup) popup.remove();
     }
 
     function renderMyShiftsView() {
