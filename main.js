@@ -19,6 +19,7 @@ window.onload = function() {
     let selectedDays = [];
     let signupsData = {};
     let viewingMyShifts = false;
+    let tempComment = "";
 
     async function fetchSignups() {
       const snapshot = await getDocs(collection(window.db, "signups"));
@@ -190,32 +191,65 @@ window.onload = function() {
       }
     }
 
-    async function submitSignup() {
-      const name = document.getElementById("name").value.trim();
-      const comment = document.getElementById("comment").value.trim();
-      if (!name) return;
+    function showCommentPopup(callback) {
+      const popup = document.createElement("div");
+      popup.style.position = "fixed";
+      popup.style.top = "50%";
+      popup.style.left = "50%";
+      popup.style.transform = "translate(-50%, -50%)";
+      popup.style.background = "#222";
+      popup.style.padding = "20px";
+      popup.style.border = "2px solid #00ffe1";
+      popup.style.zIndex = "999";
+      popup.innerHTML = `
+        <h3>Add a comment?</h3>
+        <input type="text" id="popup-comment" style="width: 100%; padding: 10px; margin-top: 10px; background: #111; color: white; border: 1px solid #00ffe1; border-radius: 6px;">
+        <br><br>
+        <button id="saveComment">Save Comment</button>
+        <button id="skipComment">Skip</button>
+      `;
 
-      for (let day of selectedDays) {
-        const dateKey = `${selectedMonth}-${day}`;
-        await addDoc(collection(window.db, "signups"), {
-          date: dateKey,
-          name,
-          comment
-        });
+      document.body.appendChild(popup);
+
+      document.getElementById("saveComment").onclick = function() {
+        tempComment = document.getElementById("popup-comment").value.trim();
+        popup.remove();
+        callback();
       }
 
-      selectedDays = [];
-      document.getElementById("name").value = "";
-      document.getElementById("comment").value = "";
-      document.getElementById("calendar").innerHTML = "";
-      document.getElementById("confirmation").style.display = "block";
+      document.getElementById("skipComment").onclick = function() {
+        tempComment = "";
+        popup.remove();
+        callback();
+      }
+    }
 
-      await fetchSignups();
-      renderCalendar();
+    async function submitSignup() {
+      const name = document.getElementById("name").value.trim();
+      if (!name) return;
 
-      setTimeout(() => {
-        document.getElementById("confirmation").style.display = "none";
-      }, 3000);
+      showCommentPopup(async () => {
+        for (let day of selectedDays) {
+          const dateKey = `${selectedMonth}-${day}`;
+          await addDoc(collection(window.db, "signups"), {
+            date: dateKey,
+            name,
+            comment: tempComment
+          });
+        }
+
+        selectedDays = [];
+        document.getElementById("name").value = "";
+        document.getElementById("calendar").innerHTML = "";
+        document.getElementById("confirmation").style.display = "block";
+
+        await fetchSignups();
+        renderCalendar();
+
+        setTimeout(() => {
+          document.getElementById("confirmation").style.display = "none";
+        }, 3000);
+      });
     }
 
     document.getElementById("submit").onclick = submitSignup;
