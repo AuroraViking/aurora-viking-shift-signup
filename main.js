@@ -175,15 +175,25 @@ window.onload = function() {
         if (!name) return;
 
         const myShifts = [];
+        const myApprovedShifts = [];
+
         for (const [date, entries] of Object.entries(signupsData)) {
-          if (entries.some(e => e.name === name)) {
-            myShifts.push(date);
-          }
+          entries.forEach(e => {
+            if (e.name === name) {
+              myShifts.push(date);
+              if (e.approved) {
+                myApprovedShifts.push(date);
+              }
+            }
+          });
         }
 
-        resultsDiv.innerHTML = myShifts.length > 0 ?
-          `<h3>Your Shifts:</h3><ul>${myShifts.map(d => `<li>${d}</li>`).join('')}</ul>` :
-          `<p>No shifts found for ${name}.</p>`;
+        resultsDiv.innerHTML = `
+          <h3>Your Shifts:</h3>
+          ${myShifts.length > 0 ? `<ul>${myShifts.map(d => `<li>${d}</li>`).join('')}</ul>` : '<p>No shifts found.</p>'}
+          <h3>✅ Approved Shifts:</h3>
+          ${myApprovedShifts.length > 0 ? `<ul>${myApprovedShifts.map(d => `<li>${d}</li>`).join('')}</ul>` : '<p>No approved shifts yet.</p>'}
+        `;
       };
     }
 
