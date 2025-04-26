@@ -163,7 +163,10 @@ function showDaySignups(dateKey) {
 window.removeSignup = async function(id) {
   await deleteDoc(doc(window.db, "signups", id));
   alert("Guide removed!");
-  document.location.reload();
+  await fetchSignups();
+  renderCalendar();
+  const popup = document.querySelector("div[style*='position: fixed']");
+  if (popup) popup.remove();
 };
 
 window.approveSignup = async function(id) {
