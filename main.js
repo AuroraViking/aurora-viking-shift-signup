@@ -105,6 +105,16 @@ window.onload = function() {
       }
     }
 
+    function showDaySignups(dateKey) {
+      const guides = signupsData[dateKey] || [];
+      if (guides.length === 0) {
+        alert("No guides signed up for this date.");
+        return;
+      }
+      const list = guides.map(g => g.name).join("\n");
+      alert(`Guides signed up for ${dateKey}:\n${list}`);
+    }
+
     function renderMyShiftsView() {
       const cal = document.getElementById("calendar");
       cal.innerHTML = '';
