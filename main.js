@@ -23,32 +23,44 @@ window.onload = function() {
     let isAdmin = false;
 
     async function showAdminLogin() {
-      const loginPopup = document.createElement("div");
-      loginPopup.style.position = "fixed";
-      loginPopup.style.top = "50%";
-      loginPopup.style.left = "50%";
-      loginPopup.style.transform = "translate(-50%, -50%)";
-      loginPopup.style.background = "#222";
-      loginPopup.style.padding = "20px";
-      loginPopup.style.border = "2px solid #00ffe1";
-      loginPopup.style.zIndex = "1000";
-      loginPopup.innerHTML = `
-        <h3>Admin Login</h3>
-        <input id="admin-password" type="password" placeholder="Enter password" style="width: 100%; padding: 10px; margin: 10px 0;">
-        <button id="admin-login">Login</button>
-      `;
-      document.body.appendChild(loginPopup);
+  const loginPopup = document.createElement("div");
+  loginPopup.style.position = "fixed";
+  loginPopup.style.top = "50%";
+  loginPopup.style.left = "50%";
+  loginPopup.style.transform = "translate(-50%, -50%)";
+  loginPopup.style.background = "#222";
+  loginPopup.style.padding = "30px";
+  loginPopup.style.border = "2px solid #00ffe1";
+  loginPopup.style.borderRadius = "10px";
+  loginPopup.style.zIndex = "1000";
+  loginPopup.style.textAlign = "center";
+  loginPopup.innerHTML = `
+    <h2 style="margin-bottom: 20px;">Login</h2>
+    <input id="admin-password" type="password" placeholder="Admin password" 
+      style="width: 100%; padding: 12px; margin: 10px 0; font-size: 16px; background: #111; color: white; border: 1px solid #00ffe1; border-radius: 8px;">
+    <div style="display: flex; justify-content: space-around; margin-top: 20px;">
+      <button id="admin-login" style="padding: 10px 20px; background: #00ffe1; color: black; border: none; border-radius: 8px; cursor: pointer;">Admin Login</button>
+      <button id="guide-login" style="padding: 10px 20px; background: #555; color: white; border: none; border-radius: 8px; cursor: pointer;">Guide Login</button>
+    </div>
+  `;
+  document.body.appendChild(loginPopup);
 
-      document.getElementById("admin-login").onclick = () => {
-        const pwd = document.getElementById("admin-password").value.trim();
-        if (pwd === "aurora123") {
-          isAdmin = true;
-          alert("Admin mode enabled!");
-        }
-        loginPopup.remove();
-        initApp();
-      };
+  document.getElementById("admin-login").onclick = () => {
+    const pwd = document.getElementById("admin-password").value.trim();
+    if (pwd === "aurora123") {
+      isAdmin = true;
+      alert("Admin mode enabled!");
     }
+    loginPopup.remove();
+    initApp();
+  };
+
+  document.getElementById("guide-login").onclick = () => {
+    loginPopup.remove();
+    initApp();
+  };
+}
+
 
     async function fetchSignups() {
       const snapshot = await getDocs(collection(window.db, "signups"));
