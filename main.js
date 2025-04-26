@@ -20,6 +20,13 @@ window.onload = function() {
     let signupsData = {};
     let viewingMyShifts = false;
     let tempComment = "";
+    let isAdmin = false;
+
+    const password = prompt("Admin password (leave blank if guide):");
+    if (password === "aurora123") {
+      isAdmin = true;
+      alert("Admin mode enabled.");
+    }
 
     async function fetchSignups() {
       const snapshot = await getDocs(collection(window.db, "signups"));
@@ -31,7 +38,6 @@ window.onload = function() {
         }
         signupsData[data.date].push({ id: docSnap.id, name: data.name, approved: data.approved || false });
       });
-      console.log(signupsData);
     }
 
     function renderTabs() {
@@ -124,8 +130,8 @@ window.onload = function() {
         ${guides.map(g => `
           <div id="guide-${g.id}" style="margin:10px;${g.approved ? ' color: lightgreen;' : ''}">
             ${g.name}
-            <button onclick="removeSignup('${g.id}')">Remove</button>
-            <button onclick="approveSignup('${g.id}')">Approve</button>
+            ${isAdmin ? `<button onclick=\"removeSignup('${g.id}')\">Remove</button>` : ''}
+            ${isAdmin ? `<button onclick=\"approveSignup('${g.id}')\">Approve</button>` : ''}
           </div>
         `).join('')}
         <br>
@@ -143,10 +149,8 @@ window.onload = function() {
     window.approveSignup = async function(id) {
       const docRef = doc(window.db, "signups", id);
       await updateDoc(docRef, { approved: true });
-
       await fetchSignups();
       renderCalendar();
-
       const popup = document.querySelector("div[style*='position: fixed']");
       if (popup) popup.remove();
     }
@@ -214,7 +218,6 @@ window.onload = function() {
         <button id="saveComment">Save Comment</button>
         <button id="skipComment">Skip</button>
       `;
-
       document.body.appendChild(popup);
 
       document.getElementById("saveComment").onclick = function() {
