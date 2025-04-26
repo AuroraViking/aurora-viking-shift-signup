@@ -111,31 +111,9 @@ function renderTabs() {
 function renderCalendar() {
   const cal = document.getElementById("calendar");
   cal.innerHTML = "";
-
-  const weekdays = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
-  const weekdaysRow = document.createElement("div");
-  weekdaysRow.className = "weekdays";
-
-  weekdays.forEach(day => {
-    const dayLabel = document.createElement("div");
-    dayLabel.className = "weekday";
-    dayLabel.textContent = day;
-    weekdaysRow.appendChild(dayLabel);
-  });
-
-  cal.appendChild(weekdaysRow);
-
   for (let day = 1; day <= daysInMonth[selectedMonth]; day++) {
     const div = document.createElement("div");
     div.className = "day";
-
-    const date = new Date(`2025-${getMonthNumber(selectedMonth)}-${day}`);
-    const dayOfWeek = date.getDay(); // 0 = Sunday, 6 = Saturday
-
-    if (dayOfWeek === 0 || dayOfWeek === 6) {
-      div.classList.add("weekend");
-    }
-
     const dateKey = `${selectedMonth}-${day}`;
     const guides = signupsData[dateKey] || [];
     const count = guides.length;
@@ -144,27 +122,16 @@ function renderCalendar() {
 
     div.innerHTML = `<strong>${day}</strong> (${count})<br><small>${initialsHTML}</small>`;
 
+    if (count >= 5) {
+      div.classList.add("full");
+    }
+
     div.onclick = () => toggleDay(day, div);
     div.ondblclick = () => showDaySignups(dateKey);
 
     cal.appendChild(div);
   }
 }
-
-function getMonthNumber(monthName) {
-  const monthsList = {
-    September: "09",
-    October: "10",
-    November: "11",
-    December: "12",
-    January: "01",
-    February: "02",
-    March: "03",
-    April: "04",
-  };
-  return monthsList[monthName];
-}
-
 
 function toggleDay(day, element) {
   if (selectedDays.includes(day)) {
