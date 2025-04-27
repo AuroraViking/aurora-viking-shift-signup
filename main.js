@@ -368,7 +368,9 @@ navMenu.innerHTML = `
   </select>
 `;
 
-document.body.appendChild(navMenu);
+const monthTabs = document.getElementById("month-tabs");
+document.body.insertBefore(navMenu, monthTabs);
+
 
 // Redirect when option selected
 document.getElementById('navigationSelect').addEventListener('change', (e) => {
