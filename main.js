@@ -343,6 +343,41 @@ async function initApp() {
   }
 
   document.getElementById("submit").onclick = submitSignup;
+    // Add Navigation Dropdown
+const navMenu = document.createElement("div");
+navMenu.id = "navigation-menu";
+navMenu.style.textAlign = "center";
+navMenu.style.marginTop = "20px";
+
+navMenu.innerHTML = `
+  <select id="navigationSelect" style="
+    font-size: 18px; 
+    padding: 10px; 
+    background: #111; 
+    border: 2px solid #00ffe1; 
+    color: #00ffe1; 
+    border-radius: 10px; 
+    font-weight: bold; 
+    box-shadow: 0 0 15px #00ffe1, 0 0 30px #00ffe1;
+    animation: glowPulse 2.5s infinite alternate;
+    margin-top: 20px;
+  ">
+    <option value="">🌟 Select Destination...</option>
+    <option value="https://auroraviking.github.io/FleetTracker1.0/">🛡 Fleet Tracker - Tablet (Guides)</option>
+    <option value="https://auroraviking.github.io/FleetTracker1.0/dashboard.html">🚀 Fleet Dashboard (Admin)</option>
+  </select>
+`;
+
+document.body.appendChild(navMenu);
+
+// Redirect when option selected
+document.getElementById('navigationSelect').addEventListener('change', (e) => {
+  const url = e.target.value;
+  if (url) {
+    window.location.href = url;
+  }
+});
+
   await fetchSignups();
   renderTabs();
   renderCalendar();
@@ -352,3 +387,5 @@ showAdminLogin();
 
 }, 100);
 };
+
+    
